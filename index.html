@@ -160,11 +160,21 @@
       position: absolute;
       left: clamp(38px, 5.4vw, 88px);
       bottom: clamp(34px, 4.2vw, 68px);
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      width: 58%;
       font-size: clamp(13px, 1.02vw, 17px);
       font-weight: 700;
       letter-spacing: .13em;
       text-transform: uppercase;
       color: #ffe8bd;
+    }
+
+    .signature span:not(:first-child) {
+      color: rgba(255, 243, 220, .78);
+      font-size: .82em;
+      letter-spacing: .09em;
     }
 
     .landscape {
@@ -702,9 +712,13 @@
         <h1>My Journey<br>from the <span class="accent">Gobi</span></h1>
         <p class="subtitle">What learning means to the son of a camel-herding family</p>
       </div>
-      <div class="signature">A personal presentation</div>
+      <div class="signature">
+        <span>B. Enkhmend · UFE Tech</span>
+        <span>AI Engineer, 1st Year · English Independent Assignment</span>
+        <span>Instructor: Suzanna Oktai</span>
+      </div>
       <span class="slide-number">01</span>
-      <aside class="notes">Good morning, everyone. I come from a camel-herding family in the Gobi Desert. When many people hear the word “learning,” they imagine a classroom, a teacher, and a textbook. My experience is wider than that. I learn at school, but I also learn from my family, our camels, and the land around us. Today I would like to share what learning means to me, the challenges I face, and how education can help me build my future while staying connected to my roots.</aside>
+      <aside class="notes">Good morning, everyone. My name is B. Enkhmend. I am a first-year AI Engineering student at UFE Tech. I come from a camel-herding family in the Gobi Desert. When many people hear the word “learning,” they imagine a classroom, a teacher, and a textbook. My experience is wider than that. I learn at school, but I also learn from my family, our camels, and the land around us. Today I would like to share what learning means to me, the challenges I face, and how education can help me build my future while staying connected to my roots.</aside>
     </section>
 
     <section class="slide landscape" aria-label="Slide 2 of 9" data-title="My learning environment">
