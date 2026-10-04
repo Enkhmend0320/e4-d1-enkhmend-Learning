@@ -209,6 +209,8 @@
     }
 
     .learning-places {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 1.2fr .8fr;
       height: 100%;
@@ -319,6 +321,8 @@
     }
 
     .day .intro {
+      position: relative;
+      z-index: 1;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -333,6 +337,7 @@
 
     .timeline {
       position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 0;
@@ -430,6 +435,8 @@
     }
 
     .method-layout {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: .85fr 1.15fr;
       gap: 7vw;
@@ -520,26 +527,58 @@
       place-items: center;
       text-align: center;
       color: var(--white);
-      background:
-        radial-gradient(circle at 50% 38%, rgba(238, 181, 82, .22), transparent 18%),
-        linear-gradient(160deg, #173f52 0%, #0c2736 56%, #071822 100%);
+      background: #071822;
     }
 
     .closing::before {
-      content: "";
-      position: absolute;
-      top: 16%;
-      left: 50%;
-      width: clamp(80px, 9vw, 145px);
-      aspect-ratio: 1;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 80px rgba(239, 182, 83, .32);
-      z-index: -1;
+      display: none;
     }
 
-    .closing-copy { max-width: 980px; }
+    .closing::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(4, 18, 29, .22), rgba(4, 18, 29, .66) 72%),
+        linear-gradient(180deg, rgba(5, 20, 32, .25), rgba(5, 19, 29, .58));
+    }
+
+    .closing-copy {
+      max-width: 980px;
+      text-shadow: 0 3px 24px rgba(0, 0, 0, .78);
+    }
+
+    .decorative-element {
+      position: absolute;
+      z-index: 0;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 14px 24px rgba(7, 25, 35, .2));
+    }
+
+    .slide-2-decoration {
+      right: 38px;
+      bottom: 30px;
+      width: 218px;
+      opacity: .94;
+    }
+
+    .slide-5-decoration {
+      left: 320px;
+      bottom: 15px;
+      width: 640px;
+      opacity: .56;
+      filter: saturate(.88) drop-shadow(0 14px 24px rgba(0, 0, 0, .22));
+    }
+
+    .slide-7-decoration {
+      left: 82px;
+      bottom: 42px;
+      width: 305px;
+      opacity: .94;
+    }
 
     .closing .final-quote {
       margin: 0 0 28px;
@@ -557,6 +596,104 @@
       letter-spacing: .15em;
       text-transform: uppercase;
     }
+
+    .reference-slide {
+      padding: 46px 54px;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .reference-slide.english-script {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .reference-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 15px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(16, 47, 66, .22);
+    }
+
+    .english-script .reference-header {
+      border-bottom-color: rgba(255, 255, 255, .2);
+    }
+
+    .reference-header h2 {
+      margin: 0;
+      font-family: Aptos, "Segoe UI", Arial, sans-serif;
+      font-size: 31px;
+      letter-spacing: -.02em;
+    }
+
+    .reference-header p {
+      margin: 0 40px 2px 0;
+      color: #657d88;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .english-script .reference-header p { color: #9fc4d3; }
+
+    .script-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 25px;
+      height: 570px;
+    }
+
+    .script-column {
+      min-width: 0;
+      padding-right: 17px;
+      border-right: 1px solid rgba(16, 47, 66, .16);
+    }
+
+    .script-column:last-child {
+      padding-right: 0;
+      border-right: 0;
+    }
+
+    .english-script .script-column {
+      border-right-color: rgba(255, 255, 255, .14);
+    }
+
+    .script-section {
+      margin-bottom: 9px;
+      break-inside: avoid;
+    }
+
+    .script-section:last-child { margin-bottom: 0; }
+
+    .script-section h3 {
+      margin: 0 0 3px;
+      color: var(--rust);
+      font-family: Aptos, "Segoe UI", Arial, sans-serif;
+      font-size: 11px;
+      line-height: 1.18;
+      letter-spacing: .025em;
+      text-transform: uppercase;
+    }
+
+    .english-script .script-section h3 { color: #f1bd66; }
+
+    .script-section p {
+      margin: 0;
+      font-family: Aptos, "Segoe UI", Arial, sans-serif;
+      font-size: 10.4px;
+      line-height: 1.23;
+      text-align: left;
+    }
+
+    .english-script .script-section p { color: #e1edf1; }
+
+    .reference-slide .slide-number { color: rgba(16, 47, 66, .64); }
+    .english-script .slide-number { color: rgba(255, 255, 255, .72); }
 
     .slide-number {
       position: absolute;
@@ -630,7 +767,7 @@
 
     .progress span {
       display: block;
-      width: 11.111%;
+      width: 9.091%;
       height: 100%;
       background: linear-gradient(90deg, var(--gold), var(--rust));
       transition: width .35s var(--ease);
@@ -696,7 +833,7 @@
       transform-origin: center center;
     }
 
-    .slide { padding: 69px; }
+    .slide { padding: 69px; transition: none; }
     h1 { font-size: 88px; }
     h2 { font-size: 54px; }
     p { font-size: 22px; }
@@ -763,7 +900,7 @@
 </head>
 <body>
   <main class="stage" id="stage" aria-live="polite">
-    <section class="slide cover active" aria-label="Slide 1 of 9" data-title="Learning: My Journey from the Gobi">
+    <section class="slide cover active" aria-label="Slide 1 of 11" data-title="Learning: My Journey from the Gobi">
       <img class="image-cover" src="assets/gobi-cover.png" alt="A young Mongolian camel herder holding a notebook beside a Bactrian camel in the Gobi Desert">
       <div class="cover-copy">
         <div class="eyebrow">Learning</div>
@@ -776,10 +913,10 @@
         <span>Instructor: Suzanna Oktai</span>
       </div>
       <span class="slide-number">01</span>
-      <aside class="notes">Good morning, everyone. My name is B. Enkhmend. I am a first-year AI Engineering student at UFE Tech. I come from a camel-herding family in the Gobi Desert. When many people hear the word “learning,” they imagine a classroom, a teacher, and a textbook. My experience is wider than that. I learn at school, but I also learn from my family, our camels, and the land around us. Today I would like to share what learning means to me, the challenges I face, and how education can help me build my future while staying connected to my roots.</aside>
+      <aside class="notes">Good afternoon, everyone. My name is B. Enkhmend. I am a first-year AI Engineering student at UFE Tech. I come from a camel-herding family in the Gobi Desert. When many people hear the word “learning,” they imagine a classroom, a teacher, and a textbook. My experience is wider than that. I learn at school, but I also learn from my family, our camels, and the land around us. Today I would like to share what learning means to me, the challenges I face, and how education can help me build my future while staying connected to my roots.</aside>
     </section>
 
-    <section class="slide landscape" aria-label="Slide 2 of 9" data-title="My learning environment">
+    <section class="slide landscape" aria-label="Slide 2 of 11" data-title="My learning environment">
       <div class="learning-places">
         <div>
           <div class="eyebrow">My learning environment</div>
@@ -792,11 +929,12 @@
           <span>The Gobi</span>
         </div>
       </div>
+      <img class="decorative-element slide-2-decoration" src="assets/slide-2-elements.png" alt="">
       <span class="slide-number">02</span>
       <aside class="notes">For me, the classroom is much larger than a school building. At home, I learn by watching experienced people and helping with real work. At school, I learn ideas that help me understand the world beyond my local area. The Gobi is also a teacher. Its weather can change quickly, so I must pay attention. Every place gives me a different kind of knowledge. Together, home, school, and nature have taught me to be curious, careful, and responsible.</aside>
     </section>
 
-    <section class="slide split-image" aria-label="Slide 3 of 9" data-title="My first teachers">
+    <section class="slide split-image" aria-label="Slide 3 of 11" data-title="My first teachers">
       <img class="image-cover" src="assets/learning-from-family.png" alt="A father teaching his son to study camel tracks in the Gobi">
       <div class="split-copy">
         <div class="eyebrow">Knowledge at home</div>
@@ -811,7 +949,7 @@
       <aside class="notes">My family members were my first teachers. When I was younger, I watched them care for the camels and make decisions about the herd. They taught me that responsibility means finishing a task even when the weather is difficult. The land taught me to prepare before conditions change. The camels taught me patience. A camel does not trust a person immediately, so I must stay calm and act with care. These lessons are practical, but they also shape my character.</aside>
     </section>
 
-    <section class="slide school" aria-label="Slide 4 of 9" data-title="Two kinds of knowledge">
+    <section class="slide school" aria-label="Slide 4 of 11" data-title="Two kinds of knowledge">
       <img class="image-cover" src="assets/learning-at-school.png" alt="A rural student learning with his teacher in a classroom overlooking the Gobi">
       <div class="school-copy">
         <div class="eyebrow rust">Home and school</div>
@@ -832,7 +970,7 @@
       <aside class="notes">I receive two kinds of knowledge, and I need both of them. At home, I learn to read tracks, notice changes in animal behaviour, and understand signs in the weather. At school, I study languages and science, and I discover how people live in other places. These kinds of knowledge do not compete with each other. They support each other. For example, science can explain something I have already seen in nature. My daily experience also helps me remember ideas from class.</aside>
     </section>
 
-    <section class="slide day" aria-label="Slide 5 of 9" data-title="A typical day">
+    <section class="slide day" aria-label="Slide 5 of 11" data-title="A typical day">
       <div class="intro">
         <div>
           <div class="eyebrow accent">Learning in real life</div>
@@ -862,11 +1000,12 @@
           <p>Short, regular practice helps me make steady progress.</p>
         </div>
       </div>
+      <img class="decorative-element slide-5-decoration" src="assets/slide-5-elements.png" alt="">
       <span class="slide-number">05</span>
       <aside class="notes">A typical day moves between family duties and schoolwork. Early in the morning, I may help check the herd. This teaches me to observe small changes. During school hours, I study new ideas and ask questions. In the evening, I help my family again, and real work develops my judgement. Later, when the day becomes quiet, I practise English. I do not always have a long time to study, but short and regular practice can still create steady progress.</aside>
     </section>
 
-    <section class="slide night" aria-label="Slide 6 of 9" data-title="Challenges in the Gobi">
+    <section class="slide night" aria-label="Slide 6 of 11" data-title="Challenges in the Gobi">
       <img class="image-cover" src="assets/night-study.png" alt="A student studying by a lamp inside a ger at night in the Gobi">
       <div class="night-copy">
         <div class="eyebrow accent">Challenges</div>
@@ -879,7 +1018,7 @@
       <aside class="notes">Learning in the Gobi brings real challenges. Distance and severe weather can change travel plans, especially in winter. Internet access can also be slow or unstable. When the signal is good, I try to save the materials that I will need later. Time is another challenge because family work can leave me tired. I cannot control every condition, but I can control my response. I prepare in advance, study in focused sessions, and continue one step at a time.</aside>
     </section>
 
-    <section class="slide method" aria-label="Slide 7 of 9" data-title="How I learn">
+    <section class="slide method" aria-label="Slide 7 of 11" data-title="How I learn">
       <div class="method-layout">
         <div class="method-intro">
           <div class="eyebrow rust">My method</div>
@@ -909,11 +1048,12 @@
           </div>
         </div>
       </div>
+      <img class="decorative-element slide-7-decoration" src="assets/slide-7-elements.png" alt="">
       <span class="slide-number">07</span>
       <aside class="notes">I use a simple method to keep learning. First, I observe. I look closely before I decide what something means. Next, I ask questions because a clear question can save time and prevent mistakes. Then I practise. Reading an answer once is not enough, so I use the skill again until I feel confident. Finally, I reflect. I think about what worked and what I should change next time. This method helps me both in school and while working with camels.</aside>
     </section>
 
-    <section class="slide future" aria-label="Slide 8 of 9" data-title="Why English matters">
+    <section class="slide future" aria-label="Slide 8 of 11" data-title="Why English matters">
       <img class="image-cover" src="assets/future-path.png" alt="A young camel herder with a notebook walking toward the Gobi horizon">
       <div class="future-copy">
         <div class="eyebrow accent">A wider world</div>
@@ -927,7 +1067,8 @@
       <aside class="notes">English is important to me because it opens a wider world. It gives me access to more books, videos, and online lessons. It also helps me communicate with people from different countries. However, English is not only a way to receive information. It is also a way to share my own story. I can explain life in the Gobi, introduce our camel-herding culture, and help other people understand its value. I want knowledge and communication to move in both directions.</aside>
     </section>
 
-    <section class="slide closing" aria-label="Slide 9 of 9" data-title="Learning gives me choices">
+    <section class="slide closing" aria-label="Slide 9 of 11" data-title="Learning gives me choices">
+      <img class="image-cover" src="assets/closing-horizon.png" alt="A Gobi sunset with a distant ger and Bactrian camels on the horizon">
       <div class="closing-copy">
         <div class="eyebrow" style="justify-content:center;color:#f2d9aa">My conclusion</div>
         <p class="final-quote">My roots give me direction.<br><span class="accent">Learning gives me choices.</span></p>
@@ -937,11 +1078,117 @@
       <span class="slide-number">09</span>
       <aside class="notes">To conclude, my roots in the Gobi give me direction. They teach me where I come from and what I value. Learning gives me choices. It helps me understand my home more deeply and prepares me for opportunities beyond it. I do not want education to separate me from my culture. I want it to help me protect what is valuable, solve new problems, and choose my own future. I hope my story shows that learning can happen anywhere. Thank you very much for listening.</aside>
     </section>
+
+    <section class="slide reference-slide" aria-label="Slide 10 of 11" data-title="Монгол ярианы бүтэн текст">
+      <div class="reference-header">
+        <h2>Монгол ярианы бүтэн текст</h2>
+        <p>Appendix · Slides 1–9</p>
+      </div>
+      <div class="script-grid" lang="mn">
+        <div class="script-column">
+          <div class="script-section">
+            <h3>1-р слайд — Говиос эхэлсэн миний аялал</h3>
+            <p>Та бүхэнд өдрийн мэнд хүргэе. Намайг Энхмэнд гэдэг. Би UFE Tech-ийн хиймэл оюуны инженерчлэлийн нэгдүгээр курсын оюутан. Өнөөдөр би говийн тэмээчин айлын хүүгийн хувьд өөрийн амьдралын туршлагад тулгуурлан суралцах тухай ярихыг хүсэж байна. Эхлэхээсээ өмнө та бүхнийг нэг асуултын талаар бодоосой гэж хүсэж байна. Бид хаанаас хамгийн их зүйлийг сурдаг вэ? Анги танхимаас уу, гэрээсээ юу, эсвэл амьдралын туршлагаасаа юу? Миний хувьд эдгээр гурав хоорондоо холбоотой. Энэ илтгэлээрээ гэр бүл, говийн амьдрал надад юу заадаг, би хэрхэн суралцдаг, мөн англи хэл миний ирээдүйд яагаад чухал болохыг тайлбарлана.</p>
+          </div>
+          <div class="script-section">
+            <h3>2-р слайд — Миний суралцах орчин сургуулиар хязгаарлагддаггүй</h3>
+            <p>Миний суралцах орчин сургуулиар хязгаарлагддаггүй гэж хэлж байгаа нь бид олон өөр газраас мэдлэг олж авдаг гэсэн утгатай. Сургууль дээр би хичээл, ном, хэлэлцүүлгээр дамжуулан суралцдаг. Гэртээ гэр бүлийнхэндээ тусалж байхдаа суралцдаг. Харин говьд газар нутаг, цаг агаар, мал амьтнаа анхааралтай ажиглаж суралцдаг. Эдгээр өөр өөр орчин надад өдөр тутмын амьдрал ч гэсэн үнэ цэнтэй багш болж чаддагийг ойлгуулдаг.</p>
+          </div>
+          <div class="script-section">
+            <h3>3-р слайд — Миний анхны багш нар</h3>
+            <p>Миний гэр бүлийнхэн бол миний анхны багш нар юм. Тэд надад мал амьтнаа арчлан халамжлах, эхэлсэн ажлаа дуусгах, өөрийн үйлдэлд хариуцлагатай хандахыг заадаг. Цаг агаар ч надад нэг чухал зүйлийг заадаг. Энэ нь нөхцөл байдал өөрчлөгдөхөөс өмнө бэлтгэлтэй байх хэрэгтэй гэсэн санаа юм. Өөрөөр хэлбэл, асуудал гарахыг хүлээлгүй, урьдчилан бодож төлөвлөх хэрэгтэй. Тэмээ надад тэвчээртэй байхыг заадаг. Мал амьтны итгэлийг олж авахад цаг хугацаа, зөөлөн харьцаа, халамж хэрэгтэй. Эдгээр сургамж зөвхөн мал маллахад хэрэг болдоггүй. Хариуцлага, бэлтгэл, тэвчээр нь намайг илүү сайн суралцагч болоход ч тусалдаг.</p>
+          </div>
+        </div>
+        <div class="script-column">
+          <div class="script-section">
+            <h3>4-р слайд — Хоёр төрлийн мэдлэг</h3>
+            <p>Миний амьдралд хоёр чухал төрлийн мэдлэг байдаг гэж би боддог. Нэг нь гэрээсээ олж авдаг мэдлэг, нөгөө нь сургуулиас эзэмшдэг мэдлэг юм. Гэртээ би малын мөрийг шинжих, цаг агаарын өөрчлөлтийг анзаарах, мал амьтны зан авирыг таньж ойлгоход суралцдаг. Харин сургуульд хэл, шинжлэх ухаан болон дэлхий ертөнцийн тухай шинэ ойлголтуудыг судалдаг. Энэ хоёр төрлийн мэдлэг бие биеэ нөхдөг гэж би үздэг. Амьдралын туршлага надад бодит жишээ өгдөг бол боловсрол аливаа зүйл яагаад тийм байдгийг ойлгоход тусалдаг. Би энэ хоёрыг холбож чадсан үедээ хамгийн сайн суралцдаг.</p>
+          </div>
+          <div class="script-section">
+            <h3>5-р слайд — Миний нэг өдөр</h3>
+            <p>Энэ слайд өдрийн өөр өөр үйл ажиллагаа хэрхэн суралцах боломж болж болохыг харуулж байна. Сүргээ эргэх нь миний ажиглах чадварыг хөгжүүлдэг. Би малынхаа биеийн байдал болон хүрээлэн буй орчныг анзаарах хэрэгтэй болдог. Хичээлийн үеэр би асуулт асууж, шинэ ойлголтыг өмнө нь мэддэг байсан зүйлтэйгээ холбодог. Гэр бүлийнхэндээ туслах нь хариуцлагатай байх, бодит нөхцөлд зөв шийдвэр гаргах чадварыг хөгжүүлдэг. Харин англи хэлээ давтах нь өөр нэг чадвараа сайжруулах боломж өгдөг. Богино хугацаагаар ч гэсэн тогтмол хичээллэх нь урагшлахад тусалж чадна. Эдгээр үйл ажиллагаа бүр надад өөр өөр зүйлийг заадаг.</p>
+          </div>
+          <div class="script-section">
+            <h3>6-р слайд — Суралцахад тууштай байдал хэрэгтэй</h3>
+            <p>Гэхдээ суралцах нь үргэлж амар байдаггүй. Говьд хол зай, цаг агаарын хүндрэл төлөвлөгөөнд нөлөөлж болно. Ялангуяа өвлийн улиралд энэ нь илүү мэдрэгддэг. Интернэт ч удаан байх тохиолдол бий. Үүнийг шийдэх нэг арга бол сүлжээ сайн үед хичээлийн материалаа татаж хадгалах юм. Өөр нэг бэрхшээл бол малын ажлын дараа суралцах цаг зав, эрч хүч гаргах явдал. Тиймээс тодорхой хугацаанд анхаарлаа төвлөрүүлж хичээллэх нь үр дүнтэй байдаг. Эдгээр бэрхшээл надад ажлаа сайн төлөвлөх, байгаа боломжоо ашиглахыг заадаг. Миний хувьд тууштай байна гэдэг нь нөхцөл хэцүү байсан ч суралцахаа үргэлжлүүлэхийг хэлнэ.</p>
+          </div>
+        </div>
+        <div class="script-column">
+          <div class="script-section">
+            <h3>7-р слайд — Би хэрхэн үргэлжлүүлэн суралцдаг вэ?</h3>
+            <p>Миний суралцах арга дөрвөн энгийн алхамтай. Эдгээр нь ажиглах, асуух, дадлага хийх, эргэцүүлэн дүгнэх юм. Нэгдүгээрт, би шийдвэр гаргахаасаа өмнө анхааралтай ажигладаг. Хоёрдугаарт, ямар нэг зүйлийг ойлгоогүй үедээ тодорхой асуулт асуудаг. Гуравдугаарт, тухайн чадварыг өөртөө хэвшүүлэх хүртлээ давтан хийж, дадлагаждаг. Эцэст нь би хийсэн зүйлээ эргэцүүлэн дүгнэдэг. Юу сайн болсон бэ? Юу хэцүү байсан бэ? Дараагийн удаа юуг өөрчлөх хэрэгтэй вэ? гэж өөрөөсөө асуудаг. Би энэ аргыг өдөр тутмын ажил, хичээл болон англи хэл сурахдаа ашиглаж чадна. Энэ нь туршлагаасаа суралцаж, ахиц гаргахад тусалдаг.</p>
+          </div>
+          <div class="script-section">
+            <h3>8-р слайд — Англи хэл надад яагаад чухал вэ?</h3>
+            <p>Англи хэл миний говийн амьдралыг дэлхий ертөнцтэй холбодог учраас надад чухал. Англи хэлтэй болсноор би илүү олон ном, видео, цахим хичээл ашиглах боломжтой. Мөн хиймэл оюуны инженерчлэлийн оюутны хувьд мэргэжлийн ойлголтуудыг англи хэлээр судалж, ойлгодог болохыг хүсдэг. Англи хэл өөр өөр орны хүмүүстэй харилцахад тусалдаг. Үүний зэрэгцээ гэр бүл, тэмээ, соёлынхоо тухай бусдад ярьж өгөх боломж олгодог. Би дэлхий ертөнцөөс суралцахын зэрэгцээ бусдад өөрийн нутаг, амьдралыг ойлгуулахыг хүсдэг.</p>
+          </div>
+          <div class="script-section">
+            <h3>9-р слайд — Уг үндэс минь надад чиг баримжаа өгдөг. Суралцах нь надад сонголт хийх боломж олгодог.</h3>
+            <p>Илтгэлээ дүгнэж хэлэхэд, гэр бүл, говийн амьдрал надад тэвчээртэй, хариуцлагатай байх, амьдралын туршлагыг үнэлэх зэрэг чухал үнэт зүйлсийг өгсөн. Харин боловсрол надад шинэ мэдлэг, ирээдүйн илүү олон сонголтыг өгдөг. Тиймээс би “Уг үндэс минь надад чиг баримжаа өгдөг. Суралцах нь надад сонголт хийх боломж олгодог” гэж хэлж байгаа юм. Би хаанаас гаралтайгаа санаж, уг үндсээ эрхэмлэхийн зэрэгцээ хөгжиж, шинэ боломжуудыг нээж, чадвараа сайжруулахыг хүсдэг. Анхаарал тавьж сонссон та бүхэнд баярлалаа. Асуулт байвал дуртайяа хариулъя.</p>
+          </div>
+        </div>
+      </div>
+      <span class="slide-number">10</span>
+      <aside class="notes">Энэ хавсралт слайд дээр 1–9-р слайдын Монгол ярианы бүтэн эхийг нэг дор харуулсан.</aside>
+    </section>
+
+    <section class="slide reference-slide english-script" aria-label="Slide 11 of 11" data-title="Full English Presentation Script">
+      <div class="reference-header">
+        <h2>Full English Presentation Script</h2>
+        <p>Appendix · Slides 1–9</p>
+      </div>
+      <div class="script-grid" lang="en">
+        <div class="script-column">
+          <div class="script-section">
+            <h3>Slide 1 — My Journey from the Gobi</h3>
+            <p>Good afternoon, everyone. My name is Enkhmend, and I am a first-year AI engineering student at UFE Tech. Today, I would like to talk about learning through my own background as the son of a camel-herding family in the Gobi. Before I begin, think about this question: Where do we learn the most—in a classroom, at home, or through experience? For me, all three are connected. In this presentation, I will explain what my family and the Gobi teach me, how I learn, and why English matters to my future.</p>
+          </div>
+          <div class="script-section">
+            <h3>Slide 2 — My Classroom Is Larger Than a School</h3>
+            <p>When I say that my classroom is larger than a school, I mean that learning happens in many places. At school, I learn through lessons, books, and discussions. At home, I learn by helping my family. In the Gobi, I learn by paying attention to the land, the weather, and the animals. These different environments help me understand that everyday life can also be a valuable teacher.</p>
+          </div>
+          <div class="script-section">
+            <h3>Slide 3 — My First Teachers</h3>
+            <p>My family members are my first teachers. They teach me to care for animals, complete my tasks, and take responsibility for my actions. The weather also teaches me an important lesson: I need to prepare before conditions change. This means thinking ahead instead of waiting until a problem appears. Camels teach me patience. Building trust with an animal takes time and gentle care. These lessons are useful beyond herding. Responsibility, preparation, and patience also help me become a better student.</p>
+          </div>
+        </div>
+        <div class="script-column">
+          <div class="script-section">
+            <h3>Slide 4 — Two Kinds of Knowledge</h3>
+            <p>I see two important kinds of knowledge in my life: knowledge from home and knowledge from school. At home, I learn to understand animal tracks, notice changes in the weather, and recognise animal behaviour. At school, I study languages, science, and ideas about the wider world. I believe these two kinds of knowledge support each other. Experience gives me practical examples, while education helps me understand why things happen. I learn best when I connect the two.</p>
+          </div>
+          <div class="script-section">
+            <h3>Slide 5 — A Typical Day</h3>
+            <p>This slide shows how different parts of a day can become opportunities to learn. Checking the herd develops my observation skills. I need to notice the condition of the animals and the environment around them. During lessons, I ask questions and connect new ideas with things I already know. Helping my family develops responsibility and practical judgement. Finally, practising English gives me a chance to improve another skill. Even a short period of regular practice can help me move forward. Each activity teaches me something different.</p>
+          </div>
+          <div class="script-section">
+            <h3>Slide 6 — Learning Takes Determination</h3>
+            <p>However, learning is not always easy. In the Gobi, long distances and difficult weather can affect plans, especially in winter. Internet access can also be slow. One practical solution is to download and save learning materials when the connection is better. Another challenge is finding enough time and energy after herding work. That is why focused study sessions are useful. These challenges teach me to plan carefully and use the opportunities I have. For me, determination means continuing to learn even when the conditions are difficult.</p>
+          </div>
+        </div>
+        <div class="script-column">
+          <div class="script-section">
+            <h3>Slide 7 — How I Keep Learning</h3>
+            <p>My learning method has four simple steps: observe, ask, practise, and reflect. First, I observe carefully before making a decision. Second, I ask clear questions when I do not understand something. Third, I practise until the skill becomes more natural. Finally, I reflect. I ask myself: What worked well? What was difficult? What should I change next time? I can use this method for practical tasks, school subjects, and English. It helps me turn experience into progress.</p>
+          </div>
+          <div class="script-section">
+            <h3>Slide 8 — Why English Matters to Me</h3>
+            <p>English is important to me because it connects my life in the Gobi with the wider world. It allows me to use more books, videos, and online lessons. As an AI engineering student, I also want to use English to understand technical ideas. English helps me communicate with people from different countries. At the same time, it gives me a way to share stories about my family, our camels, and our culture. I want to learn from the world and help the world understand my home.</p>
+          </div>
+          <div class="script-section">
+            <h3>Slide 9 — My Roots Give Me Direction. Learning Gives Me Choices.</h3>
+            <p>To conclude, my family and the Gobi have given me important values, including patience, responsibility, and respect for experience. Education gives me new knowledge and more choices for the future. That is why I say: “My roots give me direction. Learning gives me choices.” I want to grow, explore new opportunities, and develop my skills while remembering where I come from. Thank you for listening. I would be happy to answer any questions.</p>
+          </div>
+        </div>
+      </div>
+      <span class="slide-number">11</span>
+      <aside class="notes">This appendix slide contains the complete English speaking text for slides one to nine.</aside>
+    </section>
   </main>
 
   <nav class="controls" aria-label="Slide controls">
     <button id="prev" type="button" aria-label="Previous slide" title="Previous slide (Left arrow)">&#8592;</button>
-    <span class="counter" id="counter">1 / 9</span>
+    <span class="counter" id="counter">1 / 11</span>
     <button id="next" type="button" aria-label="Next slide" title="Next slide (Right arrow or Space)">&#8594;</button>
     <button id="notesToggle" type="button" aria-label="Toggle presentation script" title="Presentation script (N)">Script</button>
     <button id="fullscreen" type="button" aria-label="Toggle full screen" title="Full screen (F)">&#x26F6;</button>

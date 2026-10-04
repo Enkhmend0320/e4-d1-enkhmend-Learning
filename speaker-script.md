@@ -11,7 +11,7 @@ Language level: B2 English
 
 ## Slide 1 — Learning: My Journey from the Gobi
 
-Good morning, everyone. My name is B. Enkhmend. I am a first-year AI Engineering student at UFE Tech. I come from a camel-herding family in the Gobi Desert. When many people hear the word “learning,” they imagine a classroom, a teacher, and a textbook. My experience is wider than that. I learn at school, but I also learn from my family, our camels, and the land around us. Today I would like to share what learning means to me, the challenges I face, and how education can help me build my future while staying connected to my roots.
+Good afternoon, everyone. My name is B. Enkhmend. I am a first-year AI Engineering student at UFE Tech. I come from a camel-herding family in the Gobi Desert. When many people hear the word “learning,” they imagine a classroom, a teacher, and a textbook. My experience is wider than that. I learn at school, but I also learn from my family, our camels, and the land around us. Today I would like to share what learning means to me, the challenges I face, and how education can help me build my future while staying connected to my roots.
 
 ## Slide 2 — My Learning Environment
 
