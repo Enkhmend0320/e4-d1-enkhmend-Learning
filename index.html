@@ -681,13 +681,71 @@
 
     @media (max-width: 760px), (max-height: 520px) {
       .controls { bottom: 7px; transform: translateX(-50%) scale(.86); }
-      .slide { padding: clamp(26px, 5vw, 44px); }
-      .rule-list { margin-top: 16px; }
-      .rule-list li { padding: 10px 0; }
-      .knowledge-pair { margin-top: 18px; gap: 20px; }
-      .timeline { margin-top: 25px; }
-      .moment { min-height: 150px; padding-right: 16px; }
-      .step { padding: 8px 0; }
+      .slide { transition: none; }
+    }
+
+    /*
+      Keep the 16:9 composition at a fixed design size, then scale the whole
+      deck. This prevents minimum font sizes from colliding on small phones.
+    */
+    .stage {
+      top: calc((100% - var(--reserved-bottom, 0px)) / 2);
+      width: 1280px;
+      height: 720px;
+      transform: translate(-50%, -50%) scale(var(--deck-scale, 1));
+      transform-origin: center center;
+    }
+
+    .slide { padding: 69px; }
+    h1 { font-size: 88px; }
+    h2 { font-size: 54px; }
+    p { font-size: 22px; }
+    .eyebrow { margin-bottom: 28px; font-size: 14px; }
+    .lead { font-size: 27px; }
+    .cover .subtitle { font-size: 24px; }
+    .signature { left: 69px; bottom: 54px; font-size: 14px; }
+    .place-words span { font-size: 65px; }
+    .rule-list { margin-top: 32px; }
+    .rule-list li { padding: 18px 0; font-size: 20px; }
+    .knowledge-pair { margin-top: 38px; gap: 34px; }
+    .knowledge-pair h3 { font-size: 18px; }
+    .knowledge-pair p { font-size: 16px; }
+    .timeline { margin-top: 56px; }
+    .moment { min-height: 230px; padding-right: 32px; }
+    .moment .time { font-size: 14px; }
+    .moment h3 { font-size: 28px; }
+    .moment p { font-size: 17px; }
+    .challenge { font-size: 18px; }
+    .step { padding: 18px 0; }
+    .step .number { font-size: 38px; }
+    .step h3 { font-size: 20px; }
+    .step p { font-size: 16px; }
+    .future .quote { font-size: 34px; }
+    .future .reason { font-size: 18px; }
+    .closing .final-quote { font-size: 68px; }
+    .closing .thanks { font-size: 18px; }
+
+    .rotate-hint {
+      display: none;
+      position: fixed;
+      top: max(14px, env(safe-area-inset-top));
+      left: 50%;
+      z-index: 80;
+      transform: translateX(-50%);
+      padding: 9px 14px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 999px;
+      background: rgba(4, 18, 27, .82);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      white-space: nowrap;
+      backdrop-filter: blur(12px);
+    }
+
+    @media (orientation: portrait) and (max-width: 700px) {
+      .rotate-hint { display: block; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -896,6 +954,8 @@
     <p id="notesText"></p>
   </aside>
 
+  <div class="rotate-hint" aria-hidden="true">Rotate your phone for a larger view</div>
+
   <script>
     const slides = [...document.querySelectorAll('.slide')];
     const counter = document.getElementById('counter');
@@ -906,6 +966,14 @@
     const notesText = document.getElementById('notesText');
     const stage = document.getElementById('stage');
     let current = 0;
+
+    function fitDeck() {
+      const reserveControls = window.innerHeight < 600 ? 58 : 0;
+      const availableHeight = Math.max(180, window.innerHeight - reserveControls);
+      const scale = Math.min(window.innerWidth / 1280, availableHeight / 720);
+      stage.style.setProperty('--deck-scale', Math.max(.1, scale));
+      stage.style.setProperty('--reserved-bottom', `${reserveControls}px`);
+    }
 
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -935,7 +1003,7 @@
 
     async function toggleFullscreen() {
       if (!document.fullscreenElement) {
-        await stage.requestFullscreen?.();
+        await document.documentElement.requestFullscreen?.();
       } else {
         await document.exitFullscreen?.();
       }
@@ -975,7 +1043,12 @@
       touchStartX = null;
     }, { passive: true });
 
+    window.addEventListener('resize', fitDeck);
+    window.addEventListener('orientationchange', fitDeck);
+    document.addEventListener('fullscreenchange', fitDeck);
+
     const hashSlide = Number.parseInt(location.hash.slice(1), 10);
+    fitDeck();
     showSlide(Number.isFinite(hashSlide) ? hashSlide - 1 : 0);
   </script>
 </body>
