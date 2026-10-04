@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102f42">
+  <title>Learning: My Journey from the Gobi</title>
+  <style>
+    :root {
+      --ink: #102f42;
+      --ink-2: #173f52;
+      --paper: #f7efdf;
+      --cream: #fff9ed;
+      --sand: #d9aa72;
+      --gold: #efb653;
+      --rust: #b85c3c;
+      --sky: #78b8d8;
+      --white: #fffdf8;
+      --shadow: 0 30px 80px rgba(0, 0, 0, .38);
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #071923;
+      color: var(--ink);
+      font-family: Aptos, "Segoe UI", Arial, sans-serif;
+    }
+
+    button { font: inherit; }
+
+    .stage {
+      position: fixed;
+      inset: 50% auto auto 50%;
+      width: min(100vw, 177.7778vh);
+      height: min(100vh, 56.25vw);
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: clamp(38px, 5.4vw, 88px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(34px) scale(.992);
+      transition: opacity .42s var(--ease), transform .54s var(--ease), visibility 0s .54s;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+      transition-delay: 0s;
+      z-index: 2;
+    }
+
+    .slide.previous { transform: translateX(-34px) scale(.992); }
+
+    .slide h1,
+    .slide h2,
+    .slide p { margin-top: 0; }
+
+    h1, h2, .display {
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: -.035em;
+    }
+
+    h1 {
+      margin-bottom: .24em;
+      font-size: clamp(54px, 6.9vw, 112px);
+      line-height: .93;
+      font-weight: 700;
+    }
+
+    h2 {
+      margin-bottom: .45em;
+      font-size: clamp(40px, 4.15vw, 68px);
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: clamp(18px, 1.62vw, 28px);
+      line-height: 1.45;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0 0 28px;
+      font-size: clamp(12px, 1.05vw, 17px);
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 44px;
+      height: 3px;
+      background: currentColor;
+    }
+
+    .lead {
+      max-width: 720px;
+      font-size: clamp(21px, 2.08vw, 34px);
+      line-height: 1.33;
+    }
+
+    .accent { color: var(--gold); }
+    .rust { color: var(--rust); }
+    .sky { color: var(--sky); }
+
+    .image-cover {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+    }
+
+    .cover {
+      display: flex;
+      align-items: center;
+      color: var(--white);
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(90deg, rgba(7, 26, 36, .95) 0%, rgba(12, 42, 56, .78) 34%, rgba(10, 35, 48, .17) 66%, rgba(8, 28, 38, .03) 100%);
+    }
+
+    .cover-copy { width: 52%; }
+
+    .cover .subtitle {
+      width: 90%;
+      margin: 0;
+      color: #fff3dc;
+      font-size: clamp(20px, 1.75vw, 30px);
+      line-height: 1.35;
+    }
+
+    .signature {
+      position: absolute;
+      left: clamp(38px, 5.4vw, 88px);
+      bottom: clamp(34px, 4.2vw, 68px);
+      font-size: clamp(13px, 1.02vw, 17px);
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: #ffe8bd;
+    }
+
+    .landscape {
+      background:
+        radial-gradient(circle at 84% 18%, rgba(255, 244, 201, .92) 0 5%, transparent 5.3%),
+        linear-gradient(165deg, #79b9d8 0 42%, #eed0a0 42.3% 60%, #c57d4d 60.3% 100%);
+      color: var(--ink);
+    }
+
+    .landscape::before,
+    .landscape::after {
+      content: "";
+      position: absolute;
+      left: -8%;
+      width: 116%;
+      border-radius: 50% 50% 0 0;
+      z-index: -1;
+    }
+
+    .landscape::before {
+      bottom: -26%;
+      height: 54%;
+      background: #a95539;
+      transform: rotate(-4deg);
+    }
+
+    .landscape::after {
+      bottom: -36%;
+      height: 57%;
+      background: #153e52;
+      transform: rotate(3deg);
+    }
+
+    .learning-places {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      height: 100%;
+      align-items: center;
+      gap: 6vw;
+    }
+
+    .place-words {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--white);
+    }
+
+    .place-words span {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(43px, 5.1vw, 82px);
+      font-weight: 700;
+      line-height: .95;
+    }
+
+    .place-words span:nth-child(2) { margin-left: 1.1em; color: #ffe7b2; }
+    .place-words span:nth-child(3) { margin-left: .38em; color: #96d1e9; }
+
+    .split-image {
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .split-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(90deg, rgba(7, 24, 33, .04) 0%, rgba(8, 27, 38, .12) 44%, rgba(8, 27, 38, .88) 70%, rgba(8, 27, 38, .97) 100%);
+    }
+
+    .split-copy {
+      width: 39%;
+      position: relative;
+    }
+
+    .rule-list {
+      margin: 32px 0 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid rgba(255, 255, 255, .34);
+    }
+
+    .rule-list li {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .34);
+      font-size: clamp(17px, 1.43vw, 24px);
+      line-height: 1.35;
+    }
+
+    .rule-list strong { color: #ffd88f; }
+
+    .school {
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+    }
+
+    .school::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(90deg, rgba(255, 249, 237, .98) 0%, rgba(255, 249, 237, .94) 32%, rgba(255, 249, 237, .56) 46%, transparent 62%);
+    }
+
+    .school-copy { width: 45%; }
+
+    .knowledge-pair {
+      margin-top: 38px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+    }
+
+    .knowledge-pair div {
+      padding-top: 18px;
+      border-top: 4px solid var(--rust);
+    }
+
+    .knowledge-pair div:last-child { border-color: var(--sky); }
+
+    .knowledge-pair h3 {
+      margin: 0 0 8px;
+      font-size: clamp(16px, 1.38vw, 23px);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .knowledge-pair p {
+      font-size: clamp(15px, 1.23vw, 20px);
+      line-height: 1.42;
+      margin: 0;
+    }
+
+    .day {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .day .intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 5vw;
+    }
+
+    .day .intro p {
+      width: 39%;
+      margin-bottom: .7em;
+      color: #cfe4eb;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: clamp(40px, 6vh, 76px);
+      padding-top: 34px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 1%;
+      right: 1%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--rust), var(--sky));
+    }
+
+    .moment {
+      position: relative;
+      min-height: 230px;
+      padding-right: 32px;
+    }
+
+    .moment::before {
+      content: "";
+      position: absolute;
+      top: -32px;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border: 4px solid var(--ink);
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+
+    .moment:nth-child(2)::before { background: #dc8758; box-shadow: 0 0 0 2px #dc8758; }
+    .moment:nth-child(3)::before { background: #c6a273; box-shadow: 0 0 0 2px #c6a273; }
+    .moment:nth-child(4)::before { background: var(--sky); box-shadow: 0 0 0 2px var(--sky); }
+
+    .moment .time {
+      display: block;
+      margin-bottom: 13px;
+      color: #a8cad8;
+      font-size: clamp(13px, 1.05vw, 17px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+    }
+
+    .moment h3 {
+      margin: 0 0 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(24px, 2.18vw, 36px);
+      line-height: 1.05;
+    }
+
+    .moment p {
+      margin: 0;
+      color: #dce9ed;
+      font-size: clamp(15px, 1.22vw, 20px);
+      line-height: 1.42;
+    }
+
+    .night {
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .night::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(90deg, rgba(4, 15, 26, .04) 0%, rgba(5, 19, 31, .18) 45%, rgba(5, 18, 30, .88) 70%, rgba(5, 18, 30, .98) 100%);
+    }
+
+    .night-copy { width: 38%; }
+
+    .challenge {
+      margin: 0;
+      padding: 16px 0 16px 38px;
+      border-left: 3px solid rgba(255, 255, 255, .28);
+      font-size: clamp(16px, 1.34vw, 22px);
+      line-height: 1.42;
+    }
+
+    .challenge + .challenge { margin-top: 14px; }
+    .challenge strong { color: #ffd98d; }
+
+    .method {
+      background: var(--paper);
+    }
+
+    .method-layout {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 7vw;
+      height: 100%;
+      align-items: center;
+    }
+
+    .method-intro .lead { color: #476372; }
+
+    .steps {
+      border-top: 2px solid var(--ink);
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 64px 148px 1fr;
+      align-items: baseline;
+      gap: 22px;
+      padding: clamp(14px, 2vh, 24px) 0;
+      border-bottom: 1px solid rgba(16, 47, 66, .28);
+    }
+
+    .step .number {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--rust);
+      font-size: clamp(30px, 2.9vw, 48px);
+      font-weight: 700;
+    }
+
+    .step h3 {
+      margin: 0;
+      font-size: clamp(18px, 1.55vw, 25px);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .step p {
+      margin: 0;
+      color: #476372;
+      font-size: clamp(15px, 1.18vw, 19px);
+      line-height: 1.35;
+    }
+
+    .future {
+      color: var(--white);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .future::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(90deg, rgba(7, 28, 39, .04) 0%, rgba(8, 30, 41, .08) 42%, rgba(8, 31, 43, .82) 68%, rgba(8, 30, 42, .96) 100%);
+    }
+
+    .future-copy { width: 42%; }
+
+    .future .quote {
+      margin: 0 0 30px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(26px, 2.64vw, 44px);
+      line-height: 1.16;
+      color: #fff2d4;
+    }
+
+    .future .reason {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+      margin: 13px 0;
+      color: #e2edf0;
+      font-size: clamp(16px, 1.31vw, 21px);
+      line-height: 1.35;
+    }
+
+    .future .reason b {
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.25em;
+    }
+
+    .closing {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(238, 181, 82, .22), transparent 18%),
+        linear-gradient(160deg, #173f52 0%, #0c2736 56%, #071822 100%);
+    }
+
+    .closing::before {
+      content: "";
+      position: absolute;
+      top: 16%;
+      left: 50%;
+      width: clamp(80px, 9vw, 145px);
+      aspect-ratio: 1;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 80px rgba(239, 182, 83, .32);
+      z-index: -1;
+    }
+
+    .closing-copy { max-width: 980px; }
+
+    .closing .final-quote {
+      margin: 0 0 28px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(46px, 5.25vw, 84px);
+      line-height: 1.02;
+      letter-spacing: -.035em;
+    }
+
+    .closing .thanks {
+      margin: 0;
+      color: #f2d9aa;
+      font-size: clamp(17px, 1.42vw, 23px);
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 26px;
+      right: 34px;
+      z-index: 20;
+      color: rgba(255, 255, 255, .78);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .landscape .slide-number,
+    .school .slide-number,
+    .method .slide-number { color: rgba(16, 47, 66, .68); }
+
+    .controls {
+      position: fixed;
+      left: 50%;
+      bottom: max(12px, env(safe-area-inset-bottom));
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transform: translateX(-50%);
+      padding: 7px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 999px;
+      background: rgba(4, 18, 27, .72);
+      box-shadow: 0 12px 38px rgba(0, 0, 0, .32);
+      backdrop-filter: blur(14px);
+    }
+
+    .controls button {
+      display: grid;
+      place-items: center;
+      min-width: 38px;
+      height: 38px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .controls button:hover { background: rgba(255, 255, 255, .15); }
+    .controls button:active { transform: scale(.94); }
+    .controls button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+    .controls button[disabled] { opacity: .35; cursor: default; }
+
+    .counter {
+      min-width: 58px;
+      color: white;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 60;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, .12);
+    }
+
+    .progress span {
+      display: block;
+      width: 11.111%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--rust));
+      transition: width .35s var(--ease);
+    }
+
+    .notes-panel {
+      position: fixed;
+      right: 18px;
+      bottom: 76px;
+      z-index: 70;
+      width: min(460px, calc(100vw - 36px));
+      max-height: 42vh;
+      overflow: auto;
+      padding: 22px 24px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 18px;
+      background: rgba(4, 18, 27, .92);
+      color: white;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .4);
+      backdrop-filter: blur(18px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: .25s ease;
+    }
+
+    .notes-panel.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .notes-panel h3 {
+      margin: 0 0 9px;
+      color: var(--gold);
+      font-size: 14px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .notes-panel p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .notes { display: none; }
+
+    @media (max-width: 760px), (max-height: 520px) {
+      .controls { bottom: 7px; transform: translateX(-50%) scale(.86); }
+      .slide { padding: clamp(26px, 5vw, 44px); }
+      .rule-list { margin-top: 16px; }
+      .rule-list li { padding: 10px 0; }
+      .knowledge-pair { margin-top: 18px; gap: 20px; }
+      .timeline { margin-top: 25px; }
+      .moment { min-height: 150px; padding-right: 16px; }
+      .step { padding: 8px 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+
+    @media print {
+      @page { size: 13.333in 7.5in; margin: 0; }
+      html, body { overflow: visible; background: white; }
+      .stage { position: static; width: 13.333in; height: auto; transform: none; box-shadow: none; }
+      .slide { position: relative; display: block; width: 13.333in; height: 7.5in; opacity: 1; visibility: visible; transform: none; page-break-after: always; }
+      .controls, .progress, .notes-panel { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" id="stage" aria-live="polite">
+    <section class="slide cover active" aria-label="Slide 1 of 9" data-title="Learning: My Journey from the Gobi">
+      <img class="image-cover" src="assets/gobi-cover.png" alt="A young Mongolian camel herder holding a notebook beside a Bactrian camel in the Gobi Desert">
+      <div class="cover-copy">
+        <div class="eyebrow">Learning</div>
+        <h1>My Journey<br>from the <span class="accent">Gobi</span></h1>
+        <p class="subtitle">What learning means to the son of a camel-herding family</p>
+      </div>
+      <div class="signature">A personal presentation</div>
+      <span class="slide-number">01</span>
+      <aside class="notes">Good morning, everyone. I come from a camel-herding family in the Gobi Desert. When many people hear the word “learning,” they imagine a classroom, a teacher, and a textbook. My experience is wider than that. I learn at school, but I also learn from my family, our camels, and the land around us. Today I would like to share what learning means to me, the challenges I face, and how education can help me build my future while staying connected to my roots.</aside>
+    </section>
+
+    <section class="slide landscape" aria-label="Slide 2 of 9" data-title="My learning environment">
+      <div class="learning-places">
+        <div>
+          <div class="eyebrow">My learning environment</div>
+          <h2>My classroom is larger than a school</h2>
+          <p class="lead">I learn through lessons, daily work, and close attention to the land around me.</p>
+        </div>
+        <div class="place-words" aria-label="Home, school, and the Gobi">
+          <span>Home</span>
+          <span>School</span>
+          <span>The Gobi</span>
+        </div>
+      </div>
+      <span class="slide-number">02</span>
+      <aside class="notes">For me, the classroom is much larger than a school building. At home, I learn by watching experienced people and helping with real work. At school, I learn ideas that help me understand the world beyond my local area. The Gobi is also a teacher. Its weather can change quickly, so I must pay attention. Every place gives me a different kind of knowledge. Together, home, school, and nature have taught me to be curious, careful, and responsible.</aside>
+    </section>
+
+    <section class="slide split-image" aria-label="Slide 3 of 9" data-title="My first teachers">
+      <img class="image-cover" src="assets/learning-from-family.png" alt="A father teaching his son to study camel tracks in the Gobi">
+      <div class="split-copy">
+        <div class="eyebrow">Knowledge at home</div>
+        <h2>My first teachers</h2>
+        <ul class="rule-list">
+          <li><strong>My family</strong> teaches me to care for animals and finish every task.</li>
+          <li><strong>The weather</strong> teaches me to prepare before conditions change.</li>
+          <li><strong>Camels</strong> teach me patience because trust grows slowly.</li>
+        </ul>
+      </div>
+      <span class="slide-number">03</span>
+      <aside class="notes">My family members were my first teachers. When I was younger, I watched them care for the camels and make decisions about the herd. They taught me that responsibility means finishing a task even when the weather is difficult. The land taught me to prepare before conditions change. The camels taught me patience. A camel does not trust a person immediately, so I must stay calm and act with care. These lessons are practical, but they also shape my character.</aside>
+    </section>
+
+    <section class="slide school" aria-label="Slide 4 of 9" data-title="Two kinds of knowledge">
+      <img class="image-cover" src="assets/learning-at-school.png" alt="A rural student learning with his teacher in a classroom overlooking the Gobi">
+      <div class="school-copy">
+        <div class="eyebrow rust">Home and school</div>
+        <h2>Two kinds of knowledge</h2>
+        <p class="lead">The strongest learning happens when I connect experience with new ideas.</p>
+        <div class="knowledge-pair">
+          <div>
+            <h3>From home</h3>
+            <p>I read tracks, weather, and animal behaviour.</p>
+          </div>
+          <div>
+            <h3>From school</h3>
+            <p>I study languages, science, and the wider world.</p>
+          </div>
+        </div>
+      </div>
+      <span class="slide-number">04</span>
+      <aside class="notes">I receive two kinds of knowledge, and I need both of them. At home, I learn to read tracks, notice changes in animal behaviour, and understand signs in the weather. At school, I study languages and science, and I discover how people live in other places. These kinds of knowledge do not compete with each other. They support each other. For example, science can explain something I have already seen in nature. My daily experience also helps me remember ideas from class.</aside>
+    </section>
+
+    <section class="slide day" aria-label="Slide 5 of 9" data-title="A typical day">
+      <div class="intro">
+        <div>
+          <div class="eyebrow accent">Learning in real life</div>
+          <h2>A typical day</h2>
+        </div>
+        <p>My day moves between family duties and study. Each part teaches a different skill.</p>
+      </div>
+      <div class="timeline" aria-label="A typical day timeline">
+        <div class="moment">
+          <span class="time">Early morning</span>
+          <h3>Check the herd</h3>
+          <p>I notice tracks, weather, and the health of our camels.</p>
+        </div>
+        <div class="moment">
+          <span class="time">School hours</span>
+          <h3>Study new ideas</h3>
+          <p>I ask questions and connect lessons with daily life.</p>
+        </div>
+        <div class="moment">
+          <span class="time">Evening</span>
+          <h3>Help my family</h3>
+          <p>Real work builds responsibility and practical judgement.</p>
+        </div>
+        <div class="moment">
+          <span class="time">Quiet time</span>
+          <h3>Practise English</h3>
+          <p>Short, regular practice helps me make steady progress.</p>
+        </div>
+      </div>
+      <span class="slide-number">05</span>
+      <aside class="notes">A typical day moves between family duties and schoolwork. Early in the morning, I may help check the herd. This teaches me to observe small changes. During school hours, I study new ideas and ask questions. In the evening, I help my family again, and real work develops my judgement. Later, when the day becomes quiet, I practise English. I do not always have a long time to study, but short and regular practice can still create steady progress.</aside>
+    </section>
+
+    <section class="slide night" aria-label="Slide 6 of 9" data-title="Challenges in the Gobi">
+      <img class="image-cover" src="assets/night-study.png" alt="A student studying by a lamp inside a ger at night in the Gobi">
+      <div class="night-copy">
+        <div class="eyebrow accent">Challenges</div>
+        <h2>Learning takes determination</h2>
+        <p class="challenge"><strong>Distance and weather</strong> can change my plans, especially in winter.</p>
+        <p class="challenge"><strong>Internet access</strong> is sometimes slow, so I save materials when the signal is better.</p>
+        <p class="challenge"><strong>Time and energy</strong> are limited after herding work, so I study in focused sessions.</p>
+      </div>
+      <span class="slide-number">06</span>
+      <aside class="notes">Learning in the Gobi brings real challenges. Distance and severe weather can change travel plans, especially in winter. Internet access can also be slow or unstable. When the signal is good, I try to save the materials that I will need later. Time is another challenge because family work can leave me tired. I cannot control every condition, but I can control my response. I prepare in advance, study in focused sessions, and continue one step at a time.</aside>
+    </section>
+
+    <section class="slide method" aria-label="Slide 7 of 9" data-title="How I learn">
+      <div class="method-layout">
+        <div class="method-intro">
+          <div class="eyebrow rust">My method</div>
+          <h2>How I keep learning</h2>
+          <p class="lead">I make progress when I stay curious and use knowledge in real situations.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="number">01</span>
+            <h3>Observe</h3>
+            <p>I look closely before I make a decision.</p>
+          </div>
+          <div class="step">
+            <span class="number">02</span>
+            <h3>Ask</h3>
+            <p>I learn faster when I ask clear questions.</p>
+          </div>
+          <div class="step">
+            <span class="number">03</span>
+            <h3>Practise</h3>
+            <p>I repeat useful skills until they feel natural.</p>
+          </div>
+          <div class="step">
+            <span class="number">04</span>
+            <h3>Reflect</h3>
+            <p>I think about what worked and what I can improve.</p>
+          </div>
+        </div>
+      </div>
+      <span class="slide-number">07</span>
+      <aside class="notes">I use a simple method to keep learning. First, I observe. I look closely before I decide what something means. Next, I ask questions because a clear question can save time and prevent mistakes. Then I practise. Reading an answer once is not enough, so I use the skill again until I feel confident. Finally, I reflect. I think about what worked and what I should change next time. This method helps me both in school and while working with camels.</aside>
+    </section>
+
+    <section class="slide future" aria-label="Slide 8 of 9" data-title="Why English matters">
+      <img class="image-cover" src="assets/future-path.png" alt="A young camel herder with a notebook walking toward the Gobi horizon">
+      <div class="future-copy">
+        <div class="eyebrow accent">A wider world</div>
+        <h2>Why English matters to me</h2>
+        <p class="quote">English helps me learn from the world and tell the world about the Gobi.</p>
+        <div class="reason"><b>01</b><span>I can use more books, videos, and online lessons.</span></div>
+        <div class="reason"><b>02</b><span>I can speak with people from different countries.</span></div>
+        <div class="reason"><b>03</b><span>I can share our culture and protect its value.</span></div>
+      </div>
+      <span class="slide-number">08</span>
+      <aside class="notes">English is important to me because it opens a wider world. It gives me access to more books, videos, and online lessons. It also helps me communicate with people from different countries. However, English is not only a way to receive information. It is also a way to share my own story. I can explain life in the Gobi, introduce our camel-herding culture, and help other people understand its value. I want knowledge and communication to move in both directions.</aside>
+    </section>
+
+    <section class="slide closing" aria-label="Slide 9 of 9" data-title="Learning gives me choices">
+      <div class="closing-copy">
+        <div class="eyebrow" style="justify-content:center;color:#f2d9aa">My conclusion</div>
+        <p class="final-quote">My roots give me direction.<br><span class="accent">Learning gives me choices.</span></p>
+        <p class="lead" style="margin:0 auto 36px;color:#d8e8ee">I want to grow without forgetting where I come from.</p>
+        <p class="thanks">Thank you</p>
+      </div>
+      <span class="slide-number">09</span>
+      <aside class="notes">To conclude, my roots in the Gobi give me direction. They teach me where I come from and what I value. Learning gives me choices. It helps me understand my home more deeply and prepares me for opportunities beyond it. I do not want education to separate me from my culture. I want it to help me protect what is valuable, solve new problems, and choose my own future. I hope my story shows that learning can happen anywhere. Thank you very much for listening.</aside>
+    </section>
+  </main>
+
+  <nav class="controls" aria-label="Slide controls">
+    <button id="prev" type="button" aria-label="Previous slide" title="Previous slide (Left arrow)">&#8592;</button>
+    <span class="counter" id="counter">1 / 9</span>
+    <button id="next" type="button" aria-label="Next slide" title="Next slide (Right arrow or Space)">&#8594;</button>
+    <button id="notesToggle" type="button" aria-label="Toggle presentation script" title="Presentation script (N)">Script</button>
+    <button id="fullscreen" type="button" aria-label="Toggle full screen" title="Full screen (F)">&#x26F6;</button>
+  </nav>
+
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <aside class="notes-panel" id="notesPanel" aria-live="polite">
+    <h3>Presentation script</h3>
+    <p id="notesText"></p>
+  </aside>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const counter = document.getElementById('counter');
+    const progressBar = document.getElementById('progressBar');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    const notesPanel = document.getElementById('notesPanel');
+    const notesText = document.getElementById('notesText');
+    const stage = document.getElementById('stage');
+    let current = 0;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    function showSlide(index) {
+      const nextIndex = clamp(index, 0, slides.length - 1);
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === nextIndex);
+        slide.classList.toggle('previous', i < nextIndex);
+        slide.setAttribute('aria-hidden', i === nextIndex ? 'false' : 'true');
+      });
+      current = nextIndex;
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prevButton.disabled = current === 0;
+      nextButton.disabled = current === slides.length - 1;
+      notesText.textContent = slides[current].querySelector('.notes')?.textContent.trim() || '';
+      document.title = `${slides[current].dataset.title} | Learning from the Gobi`;
+      history.replaceState(null, '', `#${current + 1}`);
+    }
+
+    function move(step) { showSlide(current + step); }
+
+    function toggleNotes() {
+      notesPanel.classList.toggle('open');
+      document.getElementById('notesToggle').setAttribute('aria-pressed', notesPanel.classList.contains('open'));
+    }
+
+    async function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        await stage.requestFullscreen?.();
+      } else {
+        await document.exitFullscreen?.();
+      }
+    }
+
+    prevButton.addEventListener('click', () => move(-1));
+    nextButton.addEventListener('click', () => move(1));
+    document.getElementById('notesToggle').addEventListener('click', toggleNotes);
+    document.getElementById('fullscreen').addEventListener('click', toggleFullscreen);
+
+    window.addEventListener('keydown', (event) => {
+      if (['ArrowRight', 'PageDown', ' '].includes(event.key)) {
+        event.preventDefault();
+        move(1);
+      } else if (['ArrowLeft', 'PageUp'].includes(event.key)) {
+        event.preventDefault();
+        move(-1);
+      } else if (event.key === 'Home') {
+        showSlide(0);
+      } else if (event.key === 'End') {
+        showSlide(slides.length - 1);
+      } else if (event.key.toLowerCase() === 'n') {
+        toggleNotes();
+      } else if (event.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      } else if (event.key === 'Escape' && notesPanel.classList.contains('open')) {
+        toggleNotes();
+      }
+    });
+
+    let touchStartX = null;
+    stage.addEventListener('touchstart', event => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', event => {
+      if (touchStartX === null) return;
+      const distance = event.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(distance) > 55) move(distance < 0 ? 1 : -1);
+      touchStartX = null;
+    }, { passive: true });
+
+    const hashSlide = Number.parseInt(location.hash.slice(1), 10);
+    showSlide(Number.isFinite(hashSlide) ? hashSlide - 1 : 0);
+  </script>
+</body>
+</html>
